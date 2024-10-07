@@ -1,42 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { Box, Button, Heading, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Stack, Text, useColorMode } from '@chakra-ui/react'
 import ThemeToggleButton from './components/ThemeToggleButton'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Curricula from './pages/Curricula';
+import Grades from './pages/Grades';
+import Enrollments from './pages/Enrollments';
+import Profile from './pages/Profile';
 
 function App() {
+  const { colorMode } = useColorMode();
+  const bgColor = { light: 'white', dark: 'gray.800' };
+  const navBgColor = bgColor[colorMode];
 
   return (
-    <Box 
-      textAlign="center" 
-      fontSize="xl" 
-      p={4}
-      minHeight='100vh'
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-    <Heading>
-      Welcome to your University
-    </Heading>
-
-    <ThemeToggleButton />
-
-    <Text mt={4}>
-      In this part there will be a calendar, plus some tabs to go to the different sections of the app
-    </Text>
-    
-    <Stack mt={4} direction="row" spacing={4} justify="center">
-      <Button colorScheme="blue">Home</Button>
-      <Button colorScheme="purple" variant="outline">Curricula</Button>
-      <Button colorScheme="pink" variant="solid">Grades</Button>
-      <Button colorScheme="red" variant="link">Enrollments</Button>
-      <Button colorScheme="whiteAlpha" variant="ghost">Profile</Button>
-    </Stack>
-    
-    </Box>
+    <Router>
+      <Box 
+        textAlign="left" 
+        fontSize="xl" 
+        p={4}
+        minHeight='100vh'
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Flex 
+          as="nav" 
+          position="fixed" 
+          top="0" 
+          width="100%" 
+          bg="navBgColor" 
+          p={4} 
+          boxShadow="md" 
+          justifyContent="space-between"
+          alignItems="center"
+          zIndex="1"
+        >
+          <Heading size="md">University App</Heading>
+          <Stack direction="row" spacing={4}>
+            <Button as={Link} to="/" colorScheme="blue" variant="outline">Home</Button>
+            <Button as={Link} to="/curricula" colorScheme="blue" variant="outline">Curricula</Button>
+            <Button as={Link} to="/grades" colorScheme="blue" variant="outline">Grades</Button>
+            <Button as={Link} to="/enrollments" colorScheme="blue" variant="outline">Enrollments</Button>
+            <Button as={Link} to="/profile" colorScheme="blue" variant="outline">Profile</Button>
+            <ThemeToggleButton />
+          </Stack>
+        </Flex>
+        <Box mt="80px" width="100%">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/curricula" element={<Curricula />} />
+          <Route path="/grades" element={<Grades />} />
+          <Route path="/enrollments" element={<Enrollments />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+        </Box>
+      </Box>
+    </Router>
   )
 }
 
