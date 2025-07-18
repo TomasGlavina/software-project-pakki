@@ -5,7 +5,7 @@ const ThemeToggleButton: React.FC = () => {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Button onClick={toggleColorMode}>
+        <Button colorScheme='brand' onClick={toggleColorMode}>
             🌙
         </Button>
     );
